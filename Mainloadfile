@@ -1,0 +1,87 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Link Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Code Link Generator 🌐</h1>
+    <input type="text" id="urlInput" placeholder="Enter your URL here">
+    <button id="generateBtn">Generate Code</button>
+    <div id="codeDisplay"></div>
+  </div>
+<script src="script.js"></script>
+</body>
+</html>/* style.css */
+body {
+  font-family: 'Arial', sans-serif;
+  background: #fefefe;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+.container {
+  text-align: center;
+  background: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+input {
+  padding: 10px;
+  width: 80%;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #45a049;
+}
+#codeDisplay {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #333;
+  word-wrap: break-word;
+// script.js
+const generateBtn = document.getElementById('generateBtn');
+const codeDisplay = document.getElementById('codeDisplay');
+const urlInput = document.getElementById('urlInput');
+
+// Function to generate a random code
+function generateCode(length = 6) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let code = '';
+  for(let i = 0; i < length; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+generateBtn.addEventListener('click', () => {
+  const url = urlInput.value.trim();
+  if(!url) {
+    codeDisplay.innerHTML = 'Please enter a valid URL!';
+    return;
+  }
+
+  const code = generateCode();
+  // Store the code + URL in localStorage (so you can use it later if needed)
+  localStorage.setItem(code, url);
+
+  // Display a clickable link with the code
+  codeDisplay.innerHTML = `Your code: <a href="${url}" target="_blank">${code}</a>`;
+}); 
