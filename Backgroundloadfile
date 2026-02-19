@@ -1,0 +1,53 @@
+<canvas id="neoGrid"></canvas>
+<script>
+const canvas = document.getElementById('neoGrid');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+function drawGrid() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.strokeStyle = '#00ffff';
+  ctx.lineWidth = 1;
+  const spacing = 50;
+  const time = Date.now() * 0.002;
+
+  for(let x=0;x<canvas.width;x+=spacing){
+    ctx.beginPath();
+    ctx.moveTo(x + Math.sin(time + x/50)*10, 0);
+    ctx.lineTo(x + Math.sin(time + x/50)*10, canvas.height);
+    ctx.stroke();
+  }
+
+  for(let y=0;y<canvas.height;y+=spacing){
+    ctx.beginPath();
+    ctx.moveTo(0, y + Math.sin(time + y/50)*10);
+    ctx.lineTo(canvas.width, y + Math.sin(time// script.js
+const generateBtn = document.getElementById('generateBtn');
+const codeDisplay = document.getElementById('codeDisplay');
+const urlInput = document.getElementById('urlInput');
+
+// Function to generate a random code
+function generateCode(length = 6) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let code = '';
+  for(let i = 0; i < length; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+generateBtn.addEventListener('click', () => {
+  const url = urlInput.value.trim();
+  if(!url) {
+    codeDisplay.innerHTML = 'Please enter a valid URL!';
+    return;
+  }
+
+  const code = generateCode();
+  // Store the code + URL in localStorage (so you can use it later if needed)
+  localStorage.setItem(code, url);
+
+  // Display a clickable link with the code
+  codeDisplay.innerHTML = `Your code: <a href="${url}" target="_blank">${code}</a>`;
+});
